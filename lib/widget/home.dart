@@ -203,6 +203,34 @@ class _HomescreenState extends State<Homescreen> {
                               fontSize: 25.0, fontWeight: FontWeight.bold)),
                     ),
                   ]))),
+          Card(
+              //padding: EdgeInsets.fromLTRB(10.0, 40.0, 0.0, 10.0),
+              elevation: 5,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20.0),
+              ),
+              shadowColor: Colors.blue[600],
+              child: MaterialButton(
+                  color: Colors.blue[100],
+                  onPressed: () {
+                    Navigator.of(context).pushNamed('/map');
+                  },
+                  child: Row(children: <Widget>[
+                    Container(
+                      width: 150,
+                      height: 150,
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                          image: AssetImage('assets/notepad.png'),
+                        ),
+                      ),
+                    ),
+                    Container(
+                      child: Text('แผนที่',
+                          style: TextStyle(
+                              fontSize: 25.0, fontWeight: FontWeight.bold)),
+                    ),
+                  ]))),
         ],
       ),
     );
