@@ -14,6 +14,20 @@ class _MaplocationState extends State<Maplocation> {
 
   void _onMap(GoogleMapController controller) {
     mapController = controller;
+    setState(() {
+      getmarkers.add(
+        Marker(
+            markerId: MarkerId('1'),
+            position: LatLng(7.9004, 98.3515),
+            infoWindow: InfoWindow(title: 'No1')),
+      );
+      getmarkers.add(
+        Marker(
+            markerId: MarkerId('2'),
+            position: LatLng(7.9014, 98.3515),
+            infoWindow: InfoWindow(title: 'No2')),
+      );
+    });
   }
 
   Future<Position> _getLocation() async {
@@ -25,6 +39,9 @@ class _MaplocationState extends State<Maplocation> {
     }
     return userLocation;
   }
+
+  final Set<Marker> markers = new Set();
+  Set<Marker> getmarkers = {};
 
   @override
   Widget build(BuildContext context) {
@@ -41,6 +58,7 @@ class _MaplocationState extends State<Maplocation> {
                   mapType: MapType.normal,
                   onMapCreated: _onMap,
                   myLocationEnabled: true,
+                  markers: getmarkers,
                   initialCameraPosition: CameraPosition(
                       target:
                           LatLng(userLocation.latitude, userLocation.longitude),
