@@ -1,7 +1,14 @@
+import 'dart:convert';
+import 'dart:ffi';
+
+import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:flutter/material.dart';
+import 'package:helo/Mmap/addMarker.dart';
+import 'package:helo/Mmap/map_model.dart';
+import 'package:helo/addOn/myURL.dart';
 
 class Maplocation extends StatefulWidget {
   @override
@@ -11,23 +18,38 @@ class Maplocation extends StatefulWidget {
 class _MaplocationState extends State<Maplocation> {
   Position userLocation;
   GoogleMapController mapController;
+  map_model mapModel;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    ReadDataCus();
+  }
+
+  Future<Null> ReadDataCus() async {
+    String url = '${MyUrl().domain}/chanthip/getWhereCostomer.php?isAdd=true';
+    await Dio().get(url).then((value) {
+      var result = jsonDecode(value.data);
+      for (var map in result) {
+        mapModel = map_model.fromJson(map);
+
+        setState(() {
+          myMarker.add(
+            Marker(
+                markerId: MarkerId(mapModel.id),
+                position: LatLng(
+                    double.parse(mapModel.lat), double.parse(mapModel.lng)),
+                infoWindow:
+                    InfoWindow(title: mapModel.name, snippet: mapModel.other)),
+          );
+        });
+      }
+    });
+  }
 
   void _onMap(GoogleMapController controller) {
     mapController = controller;
-    setState(() {
-      getmarkers.add(
-        Marker(
-            markerId: MarkerId('1'),
-            position: LatLng(7.9004, 98.3515),
-            infoWindow: InfoWindow(title: 'No1')),
-      );
-      getmarkers.add(
-        Marker(
-            markerId: MarkerId('2'),
-            position: LatLng(7.9014, 98.3515),
-            infoWindow: InfoWindow(title: 'No2')),
-      );
-    });
   }
 
   Future<Position> _getLocation() async {
@@ -40,8 +62,7 @@ class _MaplocationState extends State<Maplocation> {
     return userLocation;
   }
 
-  final Set<Marker> markers = new Set();
-  Set<Marker> getmarkers = {};
+  List<Marker> myMarker = [];
 
   @override
   Widget build(BuildContext context) {
@@ -56,9 +77,10 @@ class _MaplocationState extends State<Maplocation> {
             if (snapshot.hasData) {
               return GoogleMap(
                   mapType: MapType.normal,
+                  onLongPress: _getAdd,
                   onMapCreated: _onMap,
                   myLocationEnabled: true,
-                  markers: getmarkers,
+                  markers: Set.from(myMarker),
                   initialCameraPosition: CameraPosition(
                       target:
                           LatLng(userLocation.latitude, userLocation.longitude),
@@ -75,5 +97,9 @@ class _MaplocationState extends State<Maplocation> {
             }
           }),
     );
+  }
+
+  _getAdd(LatLng Point) {
+    Addmarker(context, Point);
   }
 }
