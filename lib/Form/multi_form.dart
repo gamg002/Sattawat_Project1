@@ -128,6 +128,13 @@ class _MultiFormState extends State<MultiForm> {
           int unitInt = int.parse(model.unit);
           int sumInt = costInt * unitInt;
           sum.add(sumInt.toString());
+
+          SharedPreferences preferences = await SharedPreferences.getInstance();
+          String fname = preferences.getString('fname');
+
+          String url =
+              '${MyUrl().domain}/chanthip/where250.php?isAdd=true&date=$date&fname=$fname&work=$work2&type=${model.type}&cost=${model.cost}&unit=${model.unit}&sum=${sumInt.toString()}';
+          await Dio().get(url);
         }
         SharedPreferences preferences = await SharedPreferences.getInstance();
         String fname = preferences.getString('fname');

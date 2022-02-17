@@ -16,10 +16,7 @@ void registerThread(BuildContext context, LatLng Point) async {
     print('res = $response');
 
     if (response.toString() == 'true') {
-      MaterialPageRoute route = MaterialPageRoute(
-        builder: (context) => Maplocation(),
-      );
-      Navigator.pushAndRemoveUntil(context, route, (route) => false);
+      Navigator.of(context).pushNamed('/map');
     } else {
       normalDialog(context, "เกิดข้อผิดพลาด");
     }

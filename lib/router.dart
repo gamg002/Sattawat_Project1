@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:helo/Mmap/searchMap.dart';
 import 'package:helo/widget/authen.dart';
 import 'package:helo/widget/home.dart';
 import 'package:helo/widget/map.dart';
@@ -13,4 +14,5 @@ final Map<String, WidgetBuilder> routes = {
   '/save': (BuildContext context) => Save(),
   '/read': (BuildContext context) => Read(),
   '/map': (BuildContext context) => Maplocation(),
+  '/semap': (BuildContext context) => searchMap(),
 };

@@ -8,6 +8,8 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:helo/Mmap/addMarker.dart';
 import 'package:helo/Mmap/map_model.dart';
+import 'package:helo/Mmap/networkMap.dart';
+import 'package:helo/Mmap/searchMap.dart';
 import 'package:helo/addOn/myURL.dart';
 
 class Maplocation extends StatefulWidget {
@@ -70,6 +72,13 @@ class _MaplocationState extends State<Maplocation> {
       appBar: AppBar(
         backgroundColor: Colors.blue[900],
         title: Text('Map'),
+        actions: [
+          IconButton(
+              onPressed: () {
+                Navigator.of(context).pushNamed('/semap');
+              },
+              icon: Icon(Icons.search))
+        ],
       ),
       body: FutureBuilder(
           future: _getLocation(),
