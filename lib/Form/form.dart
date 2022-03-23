@@ -15,19 +15,57 @@ class UserForm extends StatefulWidget {
   bool isValid() => state.validate();
 }
 
+class Items {
+  int id;
+  String name, cost;
+  Items(this.id, this.name, this.cost);
+
+  static List<Items> getitem() {
+    return <Items>[
+      Items(1, 'ถัง', '10'),
+      Items(2, '600ml (สกรีน)', '45'),
+      Items(3, '600ml (ฉลาก)', '45'),
+      Items(4, '800ml (สกรีน)', '35'),
+      Items(5, '800ml (ฉลาก)', '45'),
+      Items(6, '250ml', '45'),
+      Items(7, '1500ml', '45'),
+    ];
+  }
+}
+
+List<Items> _companies = Items.getitem();
+List<DropdownMenuItem<Items>> _dropdownMenuItems;
+Items _selectedCompany;
+
+List<DropdownMenuItem<Items>> buildDropdownMenuItems(List companies) {
+  List<DropdownMenuItem<Items>> items = List();
+  for (Items company in companies) {
+    items.add(
+      DropdownMenuItem(
+        value: company,
+        child: Text(company.name),
+      ),
+    );
+  }
+  return items;
+}
+
 class _UserFormState extends State<UserForm> {
   final form = GlobalKey<FormState>();
   String valuechoos;
 
-  List listitem = [
-    "ถัง",
-    "250ml",
-    "600ml (สกรีน)",
-    "600ml (ฉลาก)",
-    "800ml (สกรีน)",
-    "800ml (ฉลาก)",
-    "1500ml"
-  ];
+  @override
+  void initState() {
+    _dropdownMenuItems = buildDropdownMenuItems(_companies);
+    _selectedCompany = _dropdownMenuItems[0].value;
+    super.initState();
+  }
+
+  onChangeDropdownItem(Items selectedCompany) {
+    setState(() {
+      _selectedCompany = selectedCompany;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -65,33 +103,29 @@ class _UserFormState extends State<UserForm> {
                     Padding(
                         padding: EdgeInsets.only(left: 16, right: 16, top: 16),
                         child: DropdownButton(
-                          //dropdownColor: Colors.white,
+                            //dropdownColor: Colors.white,
 
-                          hint: Text(
-                            "ชนิดสินค้า",
-                          ),
-                          value: valuechoos,
-                          onChanged: (newValue) {
-                            setState(() {
-                              widget.useproduct.type = valuechoos = newValue;
-                            });
-                          },
-                          items: listitem.map((valueItem) {
-                            return DropdownMenuItem(
-                              value: valueItem,
-                              child: Text(valueItem),
-                            );
-                          }).toList(),
-                        )),
+                            hint: Text(
+                              "ชนิดสินค้า",
+                            ),
+                            value: _selectedCompany,
+                            onChanged: onChangeDropdownItem,
+                            items: _dropdownMenuItems)),
+                    Padding(
+                      padding: EdgeInsets.only(left: 16, right: 16),
+                      child: TextFormField(
+                        onSaved: (newValue) => widget.useproduct.type =
+                            newValue = _selectedCompany.name,
+                      ),
+                    ),
                     Padding(
                       padding: EdgeInsets.only(left: 16, right: 16, bottom: 24),
                       child: TextFormField(
                         initialValue: widget.useproduct.cost,
-                        onSaved: (val) => widget.useproduct.cost = val,
-                        validator: (val) =>
-                            val.length > 0 ? null : 'โปรดระบุ ราคา/โหล',
+                        onSaved: (val) => widget.useproduct.cost =
+                            val = _selectedCompany.cost,
                         decoration: InputDecoration(
-                          labelText: 'ราคา / โหล',
+                          labelText: 'ราคา/โหล : ${_selectedCompany.cost}',
                           hintText: 'โปรดกรอกข้อมูล',
                           icon: Icon(Icons.email),
                           isDense: true,

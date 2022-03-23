@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:helo/Form/Useproduct.dart';
 import 'package:helo/Form/empty_state.dart';
 import 'package:helo/Form/form.dart';
+import 'package:helo/Form/formDetail.dart';
 import 'package:helo/addOn/myURL.dart';
 import 'package:helo/addOn/normal_dialog.dart';
 import 'package:intl/intl.dart';
@@ -147,7 +148,7 @@ class _MultiFormState extends State<MultiForm> {
         await Dio().get(url);
 
         MaterialPageRoute route = MaterialPageRoute(
-          builder: (context) => MultiForm(),
+          builder: (context) => formDetail(),
         );
         Navigator.pushAndRemoveUntil(context, route, (route) => false);
         normalDialog(context, 'บันทึกเรียบร้อย');
