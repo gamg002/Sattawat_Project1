@@ -5,9 +5,9 @@ include 'connected.php';
 if (isset($_GET)) {
 	if ($_GET['isAdd'] == 'true') {
 				
-		
+		$date = $_GET['date'];
 
-		$result = mysqli_query($link, "SELECT * FROM `order` ORDER BY `idOrder` DESC");
+		$result = mysqli_query($link, "SELECT * FROM `order` WHERE date = '$date'");
 
 		if ($result) {
 

@@ -7,7 +7,7 @@ if (isset($_GET)) {
 				
 		$user = $_GET['user'];
 
-		$result = mysqli_query($link, "SELECT * FROM username WHERE user = '$user'");
+		$result = mysqli_query($link, "SELECT * FROM username WHERE user LIKE '%$user'");
 
 		if ($result) {
 

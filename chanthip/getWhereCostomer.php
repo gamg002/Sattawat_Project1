@@ -7,7 +7,7 @@ if (isset($_GET)) {
 				
 		
 
-		$result = mysqli_query($link, "SELECT * FROM `order` ORDER BY `idOrder` DESC");
+		$result = mysqli_query($link, "SELECT * FROM `costomer`");
 
 		if ($result) {
 

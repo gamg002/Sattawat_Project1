@@ -23,7 +23,6 @@ if (!$link->set_charset("utf8")) {
 	     if ($_GET['isAdd'] == 'true') {
 				
 		     $date = $_GET['date'];
-		     $time = $_GET['time'];
 		     $fname = $_GET['fname'];
 		     $work = $_GET['work'];
 		     $type = $_GET['type'];
@@ -35,7 +34,7 @@ if (!$link->set_charset("utf8")) {
 		
 
 							
-		 $sql = "INSERT INTO `order`(`idOrder`, `date`, `time`, `fname`, `work`, `type`, `cost`, `unit`, `sum`, `lng`, `lat`) VALUES (null, '$date', '$time', '$fname', '$work', '$type', '$cost', '$unit', '$sum', '$lng', '$lat')";
+		 $sql = "INSERT INTO `chartorder`(`id`, `date`,  `fname`, `work2`, `type`, `cost`, `unit`, `sum`, `lng`, `lat`) VALUES (null, '$date', '$fname', '$work', '$type', '$cost', '$unit', '$sum', '$lng', '$lat')";
 
 		$result = mysqli_query($link, $sql);
 

@@ -5,9 +5,9 @@ include 'connected.php';
 if (isset($_GET)) {
 	if ($_GET['isAdd'] == 'true') {
 				
-		
+		$user = $_GET['user'];
 
-		$result = mysqli_query($link, "SELECT * FROM `order` ORDER BY `idOrder` DESC");
+		$result = mysqli_query($link, "SELECT * FROM chartorder WHERE type = '$user'");
 
 		if ($result) {
 
