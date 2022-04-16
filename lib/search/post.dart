@@ -1,3 +1,5 @@
+import 'package:helo/Mmap/addMarker.dart';
+
 class Post {
   String idOrder;
   String date;
@@ -8,6 +10,8 @@ class Post {
   String cost;
   String unit;
   String sum;
+  String lng;
+  String lat;
 
   Post(
       {this.idOrder,
@@ -18,7 +22,9 @@ class Post {
       this.type,
       this.cost,
       this.unit,
-      this.sum});
+      this.sum,
+      this.lng,
+      this.lat});
 
   Post.fromJson(Map<String, dynamic> json) {
     idOrder = json['idOrder'];
@@ -30,6 +36,8 @@ class Post {
     cost = json['cost'];
     unit = json['unit'];
     sum = json['sum'];
+    lng = json['lng'];
+    lat = json['lat'];
   }
 
   Map<String, dynamic> toJson() {
@@ -43,6 +51,8 @@ class Post {
     data['cost'] = this.cost;
     data['unit'] = this.unit;
     data['sum'] = this.sum;
+    data['lng'] = this.lng;
+    data['lat'] = this.lat;
     return data;
   }
 }

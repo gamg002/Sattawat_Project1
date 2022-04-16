@@ -58,7 +58,7 @@ class _formDetailState extends State<formDetail> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.blue[900],
-        title: Text('CHANTHIPTARA'),
+        title: Text('รายการวันนี้'),
       ),
       body: Column(
         children: <Widget>[

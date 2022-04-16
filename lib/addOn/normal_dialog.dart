@@ -7,13 +7,14 @@ Future<void> normalDialog(BuildContext context, String message) async {
       title: Text(message),
       children: <Widget>[
         Row(
-          mainAxisAlignment: MainAxisAlignment.end,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             FlatButton(
+                color: Colors.green,
                 onPressed: () => Navigator.pop(context),
                 child: Text(
                   'OK',
-                  style: TextStyle(color: Colors.red),
+                  style: TextStyle(color: Colors.white),
                 )),
           ],
         )

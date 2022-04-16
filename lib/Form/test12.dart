@@ -1,7 +1,13 @@
+import 'dart:convert';
+
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:helo/Mmap/map_model.dart';
+import 'package:helo/addOn/myURL.dart';
+import 'package:helo/addOn/normal1.dart';
 import 'package:helo/search/post.dart';
 import 'package:helo/widget/home.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -17,6 +23,7 @@ class test12 extends StatefulWidget {
 class _test12State extends State<test12> {
   final Post post;
   _test12State(this.post);
+  map_model mapModel;
   String user;
   int totalInts = 0;
   int indexlist = 0;
@@ -158,6 +165,8 @@ class _test12State extends State<test12> {
     readAllOrder();
   }
 
+  List<Marker> myMarker = [];
+
   Future<Null> readAllOrder() async {
     if (user != null) {
       List<String> Type = changeArrey(post.type);
@@ -169,6 +178,7 @@ class _test12State extends State<test12> {
       for (var string in Sum) {
         total = total + int.parse(string.trim());
       }
+
       setState(() {
         listType.add(Type);
         listCost.add(Cost);
@@ -178,6 +188,12 @@ class _test12State extends State<test12> {
         //print('total = $totalInts');
       });
     }
+    setState(() {
+      myMarker.add(Marker(
+        markerId: MarkerId(post.idOrder),
+        position: LatLng(double.parse(post.lat), double.parse(post.lng)),
+      ));
+    });
   }
 
   List<String> changeArrey(String string) {
@@ -337,6 +353,7 @@ class _test12State extends State<test12> {
                   //onLongPress: _getAdd,
                   onMapCreated: _onMap,
                   myLocationEnabled: true,
+                  markers: Set.from(myMarker),
                   //markers: Set.from(myMarker),
                   initialCameraPosition: CameraPosition(
                       target:
@@ -363,9 +380,7 @@ class _test12State extends State<test12> {
       child: RaisedButton.icon(
           color: Colors.green,
           onPressed: () {
-            MaterialPageRoute route = MaterialPageRoute(
-              builder: (context) => Homescreen(),
-            );
+            normal1(context, "ทำการส่งของเรียบร้อยแล้ว ?");
           },
           icon: Icon(
             Icons.add_moderator,

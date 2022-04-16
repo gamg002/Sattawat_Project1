@@ -141,97 +141,105 @@ class _HomescreenState extends State<Homescreen> {
           ],
         ),
       ),
-      body: Column(
-        children: <Widget>[
-          Container(
-            padding: EdgeInsets.fromLTRB(10.0, 40.0, 0.0, 0.0),
-            child: Text('Menu',
-                style: TextStyle(fontSize: 20.0, fontWeight: FontWeight.bold)),
-          ),
-          Card(
-              //padding: EdgeInsets.fromLTRB(10.0, 40.0, 0.0, 10.0),
-              elevation: 5,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(20.0),
-              ),
-              shadowColor: Colors.blue[600],
-              child: MaterialButton(
-                  color: Colors.blue[100],
-                  onPressed: () {
-                    Navigator.of(context).pushNamed('/save');
-                  },
-                  child: Row(children: <Widget>[
-                    Container(
-                      width: 150,
-                      height: 150,
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                          image: AssetImage('assets/notepad.png'),
+      body: SingleChildScrollView(
+        child: Column(
+          children: <Widget>[
+            Card(
+                //padding: EdgeInsets.fromLTRB(10.0, 40.0, 0.0, 10.0),
+                elevation: 5,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20.0),
+                ),
+                shadowColor: Colors.blue[600],
+                child: MaterialButton(
+                    color: Colors.blue[100],
+                    onPressed: () {
+                      Navigator.of(context).pushNamed('/save1');
+                    },
+                    child: Row(children: <Widget>[
+                      Container(
+                        width: 150,
+                        height: 150,
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                            image: NetworkImage(
+                                "https://cdn-icons-png.flaticon.com/512/1302/1302002.png"),
+                          ),
                         ),
                       ),
-                    ),
-                    Container(
-                      child: Text('บันทึกข้อมูล',
-                          style: TextStyle(
-                              fontSize: 25.0, fontWeight: FontWeight.bold)),
-                    ),
-                  ]))),
-          Card(
-              elevation: 5,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(20.0),
-              ),
-              //padding: EdgeInsets.fromLTRB(10.0, 40.0, 0.0, 10.0),
-              child: MaterialButton(
-                  color: Colors.blue[100],
-                  onPressed: () {
-                    Navigator.of(context).pushNamed('/read');
-                  },
-                  child: Row(children: <Widget>[
-                    Container(
-                      width: 150,
-                      height: 150,
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                          image: AssetImage('assets/notepad.png'),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Container(
+                        child: Text('บันทึกข้อมูล',
+                            style: TextStyle(
+                                fontSize: 25.0, fontWeight: FontWeight.bold)),
+                      ),
+                    ]))),
+            Card(
+                elevation: 5,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20.0),
+                ),
+                //padding: EdgeInsets.fromLTRB(10.0, 40.0, 0.0, 10.0),
+                child: MaterialButton(
+                    color: Colors.blue[100],
+                    onPressed: () {
+                      Navigator.of(context).pushNamed('/read');
+                    },
+                    child: Row(children: <Widget>[
+                      Container(
+                        width: 150,
+                        height: 150,
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                              image: NetworkImage(
+                                  "https://cdn-icons-png.flaticon.com/512/1055/1055645.png")),
                         ),
                       ),
-                    ),
-                    Container(
-                      child: Text('ตรวจสอบข้อมูล',
-                          style: TextStyle(
-                              fontSize: 25.0, fontWeight: FontWeight.bold)),
-                    ),
-                  ]))),
-          Card(
-              //padding: EdgeInsets.fromLTRB(10.0, 40.0, 0.0, 10.0),
-              elevation: 5,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(20.0),
-              ),
-              shadowColor: Colors.blue[600],
-              child: MaterialButton(
-                  color: Colors.blue[100],
-                  onPressed: () {
-                    Navigator.of(context).pushNamed('/map');
-                  },
-                  child: Row(children: <Widget>[
-                    Container(
-                      width: 150,
-                      height: 150,
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                          image: AssetImage('assets/notepad.png'),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Container(
+                        child: Text('ตรวจสอบข้อมูล',
+                            style: TextStyle(
+                                fontSize: 25.0, fontWeight: FontWeight.bold)),
+                      ),
+                    ]))),
+            Card(
+                //padding: EdgeInsets.fromLTRB(10.0, 40.0, 0.0, 10.0),
+                elevation: 5,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20.0),
+                ),
+                shadowColor: Colors.blue[600],
+                child: MaterialButton(
+                    color: Colors.blue[100],
+                    onPressed: () {
+                      Navigator.of(context).pushNamed('/map');
+                    },
+                    child: Row(children: <Widget>[
+                      Container(
+                        width: 150,
+                        height: 150,
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                            image: NetworkImage(
+                                "https://cdn-icons.flaticon.com/png/512/3253/premium/3253253.png?token=exp=1650118357~hmac=337be1086fc34f278c898b092b72a456"),
+                          ),
                         ),
                       ),
-                    ),
-                    Container(
-                      child: Text('แผนที่',
-                          style: TextStyle(
-                              fontSize: 25.0, fontWeight: FontWeight.bold)),
-                    ),
-                  ]))),
-        ],
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Container(
+                        child: Text('แผนที่',
+                            style: TextStyle(
+                                fontSize: 25.0, fontWeight: FontWeight.bold)),
+                      ),
+                    ]))),
+          ],
+        ),
       ),
     );
   }

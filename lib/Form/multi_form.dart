@@ -1,9 +1,14 @@
+import 'dart:convert';
+
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:helo/Form/Useproduct.dart';
 import 'package:helo/Form/empty_state.dart';
 import 'package:helo/Form/form.dart';
 import 'package:helo/Form/formDetail.dart';
+import 'package:helo/Form/usermap.dart';
+import 'package:helo/Mmap/addMarker.dart';
+import 'package:helo/Mmap/map_model.dart';
 import 'package:helo/addOn/myURL.dart';
 import 'package:helo/addOn/normal_dialog.dart';
 import 'package:intl/intl.dart';
@@ -15,12 +20,21 @@ class MultiForm extends StatefulWidget {
 }
 
 class _MultiFormState extends State<MultiForm> {
+  String latt, lngg, work;
+
   List<UserForm> users = [];
 
-  TextEditingController work = TextEditingController();
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
+    String towork = ModalRoute.of(context).settings.arguments;
+    work = towork;
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.blue[900],
@@ -29,9 +43,8 @@ class _MultiFormState extends State<MultiForm> {
           onPressed: onBack,
         ),
         title: TextField(
-            controller: work,
             decoration: InputDecoration(
-                hintText: "ชื่องาน",
+                hintText: "$towork",
                 hintStyle: TextStyle(color: Colors.white))),
         actions: <Widget>[
           FlatButton(
@@ -103,6 +116,7 @@ class _MultiFormState extends State<MultiForm> {
   ///on save forms
   void onSave() async {
     if (users.length > 0) {
+      orderuser();
       var allValid = true;
       users.forEach((form) => allValid = allValid && form.isValid());
       if (allValid) {
@@ -111,19 +125,27 @@ class _MultiFormState extends State<MultiForm> {
         DateTime dateTime = DateTime.now();
         String date = DateFormat('dd-MM-yyyy').format(dateTime);
         String time = DateFormat('HH:mm').format(dateTime);
-        String work2 = work.text;
-
-        print('work = $work2');
+        String work2;
 
         List<String> cost = List();
         List<String> unit = List();
         List<String> type = List();
         List<String> sum = List();
 
+        // print('latt = $latt');
+        //print('lngg = $lngg');
+
         for (var model in data) {
           cost.add(model.cost);
           unit.add(model.unit);
           type.add(model.type);
+
+          setState(() {
+            work2 = work;
+          });
+          print('work = $work2');
+          //print('lat = $lat');
+          //print('lng = $lng');
 
           int costInt = int.parse(model.cost);
           int unitInt = int.parse(model.unit);
@@ -144,7 +166,7 @@ class _MultiFormState extends State<MultiForm> {
             'Date = $date,Time = $time,type = $type,cost = $cost, unit = $unit,name = $fname,sum = $sum');
 
         String url =
-            '${MyUrl().domain}/chanthip/addOrder.php?isAdd=true&date=$date&fname=$fname&time=$time&work=$work2&type=$type&cost=$cost&unit=$unit&sum=$sum';
+            '${MyUrl().domain}/chanthip/addOrder.php?isAdd=true&date=$date&fname=$fname&time=$time&work=$work2&type=$type&cost=$cost&unit=$unit&sum=$sum&lat=$latt&lng=$lngg';
         await Dio().get(url);
 
         MaterialPageRoute route = MaterialPageRoute(
@@ -158,5 +180,29 @@ class _MultiFormState extends State<MultiForm> {
 
   void onBack() {
     Navigator.of(context).pushNamed('/Home');
+  }
+
+  void orderuser() async {
+    String url =
+        '${MyUrl().domain}/chanthip/getWhereCostomer1.php?isAdd=true&name=$work';
+
+    Response response = await Dio().get(url);
+    //print("res : $response");
+    if (response.toString() != 'null') {
+      var result = json.decode(response.data);
+
+      for (var map in result) {
+        map_model model = map_model.fromJson(map);
+        // print("${model.lat}");
+        //print("${model.lng}");
+
+        setState(() {
+          latt = model.lat;
+          lngg = model.lng;
+        });
+        print("$latt");
+        print("$lngg");
+      }
+    }
   }
 }
